@@ -10,7 +10,7 @@ public class Mine : MonoBehaviour
         _ore = transform.GetComponentsInChildren<Ore>(); 
     }
 
-    public Ore TryGetClosest()
+    public Ore TryGetClosest(Vector3 point)
     {
         Ore[] notEmptyOre = _ore.Where(ore => ore.Empty == false).ToArray();
 
@@ -19,6 +19,8 @@ public class Mine : MonoBehaviour
             return null;
         }
 
-        return _ore.Closest(new Vector3(1, 1, 1));
+        point = new Vector3(1, 1, 1);
+
+        return _ore.Closest(point);
     }
 }

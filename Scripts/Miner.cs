@@ -27,17 +27,17 @@ public class Miner : MonoBehaviour
 
     private void Update()
     {
-        if (Valid())
+        if (Valid(_current))
         {
             Update(_current);
         }
         else
         {
-            _current = _mine.TryGetClosest();
+            _current = _mine.TryGetClosest(transform.position);
         }
     }
 
-    private bool Valid()
+    private bool Valid(Ore ore)
     {
         return _current != null && _current.Empty == false;
     }

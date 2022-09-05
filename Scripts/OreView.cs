@@ -4,11 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Ore))]
 public class OreView : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Color _emptyColor;
 
     private Ore _ore;
     private Color _notEmptyColor;
+    private MeshRenderer _renderer;
 
     private void OnEnable()
     {
@@ -16,10 +16,24 @@ public class OreView : MonoBehaviour
         _ore = GetComponent<Ore>();
 
         _notEmptyColor = _renderer.material.color;
+
+        _ore.AmountChanged += OnAmountChanged;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        
+        _ore.AmountChanged -= OnAmountChanged;
+    }
+
+    private void OnAmountChanged()
+    {
+        if (_ore.Empty)
+        {
+            _renderer.material.color = _emptyColor;
+        }
+        else
+        {
+            _renderer.material.color = _notEmptyColor;
+        }
     }
 }
